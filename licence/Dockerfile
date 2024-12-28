@@ -16,11 +16,11 @@ RUN mkdir -p target/dependency && (cd target/dependency; jar -xf ../../app.jar)
 FROM openjdk:17-slim
 #Add volume pointing to /tmp
 VOLUME /tmp
+EXPOSE 8080:8000
 #Copy unpackaged application to new container
 ARG DEPENDENCY=/application/target/dependency
 COPY --from=build ${DEPENDENCY}/BOOT-INF/lib /app/lib
 COPY --from=build ${DEPENDENCY}/META-INF /app/META-INF
 COPY --from=build ${DEPENDENCY}/BOOT-INF/classes /app
-EXPOSE 8080
 #execute the application
-ENTRYPOINT ["java","-cp","app:app/lib/*","com.optimagrowth.license.LicenseApplication"]
+RUN java -cp app:app/lib/* com.optimagrowth.license.LicenseApplication
