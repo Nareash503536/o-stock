@@ -23,16 +23,16 @@ public class LicenseController {
         License license = licenseService.getLicense(licenseId, organizationId);
 
         license.add(linkTo(methodOn(LicenseController.class)
-                        .getLicense(organizationId, license.getLicenseId()))
+                        .getLicense(license.getOrganizationId(), license.getLicenceId()))
                         .withSelfRel(),
                 linkTo(methodOn(LicenseController.class)
-                        .createLicense(license, organizationId))
+                        .createLicense(license))
                         .withRel("createLicense"),
                 linkTo(methodOn(LicenseController.class)
-                        .updateLicense(license, organizationId))
+                        .updateLicense(license))
                         .withRel("updateLicense"),
                 linkTo(methodOn(LicenseController.class)
-                        .deleteLicense(organizationId, license.getLicenseId()))
+                        .deleteLicense(license.getLicenceId()))
                         .withRel("deleteLicense"));
 
         return ResponseEntity.ok(license);
@@ -40,25 +40,22 @@ public class LicenseController {
 
     @DeleteMapping(value = "/{licenseId}")
     public ResponseEntity<String> deleteLicense(
-            @PathVariable("organizationId") String organizationId,
             @PathVariable("licenseId") String licenseId
     ) {
-        return ResponseEntity.ok(licenseService.deleteLicense(organizationId, licenseId));
+        return ResponseEntity.ok(licenseService.deleteLicense(licenseId));
     }
 
     @PostMapping
-    public ResponseEntity<String> createLicense(
-            @RequestBody License license,
-            @PathVariable("organizationId") String organizationId
+    public ResponseEntity<License> createLicense(
+            @RequestBody License license
     ) {
-        return ResponseEntity.ok(licenseService.createLicense(license, organizationId));
+        return ResponseEntity.ok(licenseService.createLicense(license));
     }
 
     @PutMapping(value = "/{licenseId}")
-    public ResponseEntity<String> updateLicense(
-            @RequestBody License license,
-            @PathVariable("organizationId") String organizationId
+    public ResponseEntity<License> updateLicense(
+            @RequestBody License license
     ) {
-        return ResponseEntity.ok(licenseService.updateLicense(license, organizationId));
+        return ResponseEntity.ok(licenseService.updateLicense(license));
     }
 }

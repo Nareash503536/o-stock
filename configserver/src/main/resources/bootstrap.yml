@@ -1,0 +1,17 @@
+server:
+  port: 8888
+spring:
+  application:
+    name: config-server
+  profiles:
+    active: git
+  cloud:
+    bootstrap:
+      enabled: true
+    config:
+      server:
+        git:
+          password: '{cipher}85d6babf3e80ac86c6d69ec95f46d3ee3664be0c869abef26e67637019ca27743e5a04d44c707f80ec4c5eb9116a49097fdf6a45db75081d2b8a7fae6053e11f'
+          uri: https://github.com/Nareash503536/o-stock-config.git
+          username: Nareash503536
+ENCRYPT_KEY: uE]zzP0NiN$p
