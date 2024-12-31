@@ -17,13 +17,13 @@ ALTER TABLE public.organization
 
 CREATE TABLE IF NOT EXISTS public.license
 (
-    licence_id text COLLATE pg_catalog."default" NOT NULL,
+    license_id text COLLATE pg_catalog."default" NOT NULL,
     organization_id text COLLATE pg_catalog."default" NOT NULL,
     description text COLLATE pg_catalog."default",
     product_name text COLLATE pg_catalog."default" NOT NULL,
     license_type text COLLATE pg_catalog."default" NOT NULL,
     comment text COLLATE pg_catalog."default",
-    CONSTRAINT license_pkey PRIMARY KEY (licence_id),
+    CONSTRAINT license_pkey PRIMARY KEY (license_id),
     CONSTRAINT license_organization_id_fkey FOREIGN KEY (organization_id)
     REFERENCES public.organization (organization_id) MATCH SIMPLE
     ON UPDATE NO ACTION

@@ -23,7 +23,7 @@ public class LicenseController {
         License license = licenseService.getLicense(licenseId, organizationId);
 
         license.add(linkTo(methodOn(LicenseController.class)
-                        .getLicense(license.getOrganizationId(), license.getLicenceId()))
+                        .getLicense(license.getOrganizationId(), license.getLicenseId()))
                         .withSelfRel(),
                 linkTo(methodOn(LicenseController.class)
                         .createLicense(license))
@@ -32,7 +32,7 @@ public class LicenseController {
                         .updateLicense(license))
                         .withRel("updateLicense"),
                 linkTo(methodOn(LicenseController.class)
-                        .deleteLicense(license.getLicenceId()))
+                        .deleteLicense(license.getLicenseId()))
                         .withRel("deleteLicense"));
 
         return ResponseEntity.ok(license);

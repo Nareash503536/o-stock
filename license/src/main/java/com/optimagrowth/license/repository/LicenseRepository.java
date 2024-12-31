@@ -8,7 +8,6 @@ import java.util.List;
 
 @Repository
 public interface LicenseRepository extends CrudRepository<License, String> {
-    public List<License> findByOrganizationId(String organizationId);
-    public License findLicenseByLicenceId(String licenceId);
-    public License findLicenseByOrganizationIdAndLicenceId(String organizationId, String licenceId);
+    public License findLicenseByLicenseId(String licenseId);
+    public License findLicenseByOrganizationIdAndLicenseId(String organizationId, String licenseId);
 }

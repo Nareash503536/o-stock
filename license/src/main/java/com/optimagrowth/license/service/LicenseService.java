@@ -3,16 +3,18 @@ package com.optimagrowth.license.service;
 import com.optimagrowth.license.config.ServiceConfig;
 import com.optimagrowth.license.model.License;
 import com.optimagrowth.license.repository.LicenseRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 
-import java.util.Random;
+import java.util.Locale;
 import java.util.UUID;
 
 @Service
 public class LicenseService {
-
+    Logger logger = LoggerFactory.getLogger(LicenseService.class);
     @Autowired
     private LicenseRepository licenseRepository;
     @Autowired
@@ -20,39 +22,32 @@ public class LicenseService {
     @Autowired
     ServiceConfig config;
     public License getLicense(String licenseId, String organizationId){
-        License license = licenseRepository.findLicenseByOrganizationIdAndLicenceId(organizationId, licenseId);
+        License license = licenseRepository.findLicenseByOrganizationIdAndLicenseId(organizationId, licenseId);
         if(license == null) {
             throw new IllegalArgumentException(
-                    String.format(messageSource.getMessage(
-                                    "license.search.error.message", null, null),
-                            licenseId, organizationId));
+                    String.format("Unable to find license with License id " + licenseId));
         }
         return license.withComment(config.getProperty());
     }
 
     public License createLicense(License license){
-        license.setLicenceId(UUID.randomUUID().toString());
-        licenseRepository.save(license);
-        return license.withComment(config.getProperty());
+        license.setLicenseId(UUID.randomUUID().toString());
+        return licenseRepository.save(license);
     }
 
     public License updateLicense(License license){
-        licenseRepository.save(license);
-        return license.withComment(config.getProperty());
+        return licenseRepository.save(license);
     }
 
     public String deleteLicense(String licenseId){
-        License license = licenseRepository.findLicenseByLicenceId(licenseId);
+        License license = licenseRepository.findLicenseByLicenseId(licenseId);
         if(license == null){
             throw new IllegalArgumentException(
-                    String.format(messageSource.getMessage(
-                            "license.search.error.message", null, null
-                    ))
+                    String.format("Unable to find license with License id " + licenseId)
             );
         }
-        return String.format(messageSource.getMessage(
-                "license.delete.message", null, null
-        ));
+        licenseRepository.delete(license);
+        return String.format("Deleting license with id" + licenseId);
     }
 
 }

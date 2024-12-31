@@ -17,8 +17,8 @@ import org.springframework.hateoas.RepresentationModel;
 @Table(name = "license")
 public class License extends RepresentationModel<License> {
     @Id
-    @Column(name = "licence_id", nullable = false)
-    private String licenceId;
+    @Column(name = "license_id", nullable = false)
+    private String licenseId;
 
     private String description;
 
